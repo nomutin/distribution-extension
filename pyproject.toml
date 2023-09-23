@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "distribution-extention"
+version = "0.1.0"
+description = "Simple extentions of `torch.distributions`."
+authors = ["Nomura Yuta"]
+readme = "README.md"
+packages = [{include = "distribution_extention"}]
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0"
+torch = { url = "https://download.pytorch.org/whl/cu117/torch-2.0.1%2Bcu117-cp38-cp38-linux_x86_64.whl" }
+einops = "^0.6.1"
+
+[tool.poetry.group.lint]
+optional = true
+[tool.poetry.group.lint.dependencies]
+isort = "^5.10.1"
+black = "^22.10.0"
+ruff = "^0.0.280"
+
+[tool.poetry.group.test]
+optional = true
+[tool.poetry.group.test.dependencies]
+pytest-cov = "^4.0.0"
+mypy = "^1.1.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+    'ignore:distutils Version classes are deprecated.:DeprecationWarning',
+]
+
+[tool.mypy]
+python_version = 3.8
+ignore_missing_imports = true
+
+[tool.ruff]
+select = ["ALL"]
+ignore = ["D203", "D212", "ANN",]
+fixable = ["ALL"]
+unfixable = []
+exclude = [".git", ".ruff_cache", ".venv",]
+line-length = 79
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+target-version = "py38"
+
+[tool.isort]
+profile = "black"
+line_length = 79
