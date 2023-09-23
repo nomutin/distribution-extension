@@ -66,13 +66,6 @@ class Independent(td.Independent):
 class DistributionBase(td.Distribution):
     """Abstract class for Custom Distribution."""
 
-    def __init__(
-        self, validate_args: None | bool = None, **params: Tensor,
-    ) -> None:
-        """Initialize."""
-        super().__init__(validate_args=validate_args)
-        self.params = params
-
     @classmethod
     def from_tensor(cls, tensor: Tensor, **kwargs: Any) -> DistributionBase:
         """

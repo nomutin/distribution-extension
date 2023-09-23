@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "distribution-extention"
-version = "0.1.0"
+version = "0.1.1"
 description = "Simple extentions of `torch.distributions`."
 authors = ["Nomura Yuta"]
 readme = "README.md"
