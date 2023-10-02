@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Tuple, Union
+from typing import Tuple, Union
 
 import torch
 import torch.distributions as td
@@ -66,16 +66,8 @@ class Independent(td.Independent):
 class DistributionBase(td.Distribution):
     """Abstract class for Custom Distribution."""
 
-    @classmethod
-    def from_tensor(cls, tensor: Tensor, **kwargs: Any) -> DistributionBase:
-        """
-        Easy instantiation function.
-
-        Tensor parameters (e.g., mean and variance of the normal)
-        are given by ONE tensor, and other parameters
-        (e.g., temperature of the categorical) are given by `**kwargs`.
-        """
-        raise NotImplementedError
+    def __init__(self) -> None:
+        super().__init__(validate_args=self._validate_args)
 
     @property
     def parameters(self) -> dict[str, Tensor]:
@@ -89,24 +81,24 @@ class DistributionBase(td.Distribution):
     def to(self, device: torch.device) -> DistributionBase:
         """Convert device."""
         params = {k: v.to(device) for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)
+        return type(self)(**params)
 
     def squeeze(self, dim: int) -> DistributionBase:
         """Squeeze distribution."""
         params = {k: v.squeeze(dim) for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)
+        return type(self)(**params)
 
     def unsqueeze(self, dim: int) -> DistributionBase:
         """Unsqueeze distribution."""
         params = {k: v.unsqueeze(dim) for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)
+        return type(self)(**params)
 
     def __getitem__(self, loc: _slicelike) -> DistributionBase:
         """Silice distribution."""
         params = {k: v[loc] for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)
+        return type(self)(**params)
 
     def detach(self) -> DistributionBase:
         """Detach computational graph."""
         params = {k: v.detach() for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)
+        return type(self)(**params)

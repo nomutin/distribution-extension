@@ -10,10 +10,10 @@ This module provides the following features.
 
     ```python
     import torch
-    from distrubution_extentions import Normal
+    from distrubution_extentions import NormalFactory
 
     tensor = torch.rand([256, 100, 16])
-    distribution = Normal.from_tensor(tensor=tensor)
+    distribution = NormalFactory()(Tensor)
     distribution.sample()  # -> Tensor[128, 100, 8]
     ```
 

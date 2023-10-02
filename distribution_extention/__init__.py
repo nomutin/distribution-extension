@@ -3,6 +3,13 @@
 from .base import DistributionBase, Independent
 from .continuous import GMM, Normal
 from .discrete import Categorical, OneHotCategorical
+from .factory import (
+    CategoricalFactory,
+    GMMFactory,
+    IndependentFactory,
+    NormalFactory,
+    OneHotCategoricalFactory,
+)
 from .kl import kl_divergence
 
 __all__ = [
@@ -13,4 +20,9 @@ __all__ = [
     "Categorical",
     "OneHotCategorical",
     "kl_divergence",
+    "CategoricalFactory",
+    "GMMFactory",
+    "IndependentFactory",
+    "NormalFactory",
+    "OneHotCategoricalFactory",
 ]

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "distribution-extention"
-version = "0.1.1"
+version = "0.1.2"
 description = "Simple extentions of `torch.distributions`."
 authors = ["Nomura Yuta"]
 readme = "README.md"
@@ -44,7 +44,7 @@ ignore_missing_imports = true
 
 [tool.ruff]
 select = ["ALL"]
-ignore = ["D203", "D212", "ANN",]
+ignore = ["D203", "D212", "ANN", "D"]
 fixable = ["ALL"]
 unfixable = []
 exclude = [".git", ".ruff_cache", ".venv",]
