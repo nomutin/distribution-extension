@@ -66,17 +66,6 @@ class Independent(td.Independent):
 class DistributionBase(td.Distribution):
     """Abstract class for Custom Distribution."""
 
-    @classmethod
-    def from_tensor(cls, tensor: Tensor, **kwargs: Any) -> DistributionBase:
-        """
-        Easy instantiation function.
-
-        Tensor parameters (e.g., mean and variance of the normal)
-        are given by ONE tensor, and other parameters
-        (e.g., temperature of the categorical) are given by `**kwargs`.
-        """
-        raise NotImplementedError
-
     @property
     def parameters(self) -> dict[str, Tensor]:
         """Define distribion parapers as dict."""

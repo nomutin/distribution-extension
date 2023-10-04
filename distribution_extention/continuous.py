@@ -19,17 +19,6 @@ _zero_size = torch.Size([])
 class Normal(td.Normal, DistributionBase):
     """Extension of `torch.distributions.Normal` ."""
 
-    @classmethod
-    def from_tensor(
-        cls,
-        tensor: Tensor,
-        **kwargs: dict,  # noqa: ARG003
-    ) -> Normal:
-        """Build Normal from tensor."""
-        mean, scale = torch.chunk(tensor, chunks=2, dim=-1)
-        scale = tf.softplus(scale) + 0.1
-        return cls(loc=mean, scale=scale)
-
     def kl_divergence_starndard_normal(self) -> Tensor:
         """Calculate KL divergence between self and standard normal."""
         kld = 1 + self.variance.log() - self.mean.pow(2) - self.variance
@@ -109,28 +98,3 @@ class GMM(DistributionBase, td.Distribution):
     def log_prob(self, value: Tensor) -> Tensor:
         """Calculate log-likelihood."""
         return self.dist.log_prob(value)
-
-    @classmethod
-    def from_tensor(cls, tensor: Tensor, **kwargs: Any) -> GMM:
-        """Build GMM from feature."""
-        num_mixture = kwargs["num_mixture"]
-
-        # feat[batch_size*,dim*3*mix] -> feat[batch_size,dim*3*mix]
-        feature, ps = pack([tensor], "* d")
-
-        # feat[batch_size,dim*3*mix] -> π,μ,o[batch_size,dim,mix]
-        weighting, mean, log_var = torch.chunk(feature, chunks=3, dim=-1)
-        weighting = rearrange(weighting, "b (d n) -> b d n", n=num_mixture)
-        mean = rearrange(mean, "b (d n) -> b d n", n=num_mixture)
-        log_var = rearrange(log_var, "b (d n) -> b d n", n=num_mixture)
-
-        # weightings -> probs, log_var -> scale
-        probs = tf.softmax(weighting, dim=-1)
-        scale = torch.clamp(log_var, min=-7.0, max=7.0).exp().sqrt()
-
-        # π,μ,o[batch_size,dim,mix] -> π,μ,o[batch_size*,dim,mix]
-        probs = unpack(probs, ps, "* d n")[0]
-        mean = unpack(mean, ps, "* d n")[0]
-        scale = unpack(scale, ps, "* d n")[0]
-
-        return cls(probs=probs, loc=mean, scale=scale)
