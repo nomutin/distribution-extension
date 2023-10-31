@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 import torch
 import torch.distributions as td
 from einops import pack, rearrange, unpack

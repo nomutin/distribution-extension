@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Tuple, Union
+from typing import Tuple, Union
 
 import torch
 import torch.distributions as td
