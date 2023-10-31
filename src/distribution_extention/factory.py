@@ -114,4 +114,4 @@ class IndependentFactory(nn.Module):
 
     def forward(self, dist: DistributionBase) -> Independent:
         """Generate Independent from `Distribution`."""
-        return dist.independent(dim=-1)
+        return dist.independent(dim=self.dim)
