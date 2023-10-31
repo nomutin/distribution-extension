@@ -20,28 +20,28 @@ This module provides the following features.
 - Easy independence
 
     ```python
-    distribution = Normal.from_tensor(tensor=tensor)
-    independent = distribution.independent(dim=-1)
+    distribution = Normal(loc=loc, scale=scale)
+    independent = distribution.independent(dim=1)
     ```
 
 - Device conversion
 
     ```python
     device = torch.device("cuda:0")
-    distribution = Normal.from_tensor(tensor=tensor)
+    distribution = Normal(loc=loc, scale=scale)
     distribution = distribution.to(device=device)
     ```
 
 - Slicing
 
     ```python
-    distribution = Normal.from_tensor(tensor=tensor)[:, 0, :]
+    distribution = Normal(loc=loc, scale=scale) [:, 0, :]
     distribution.sample()  # -> Tensor[128, 8]
     ```
 
 - Gradient stop
 
     ```python
-    distribution = Normal.from_tensor(tensor=tensor)
+    distribution = Normal(loc=loc, scale=scale) 
     distribution.detach()
     ```
