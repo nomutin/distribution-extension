@@ -1,3 +1,5 @@
+"""Facrory method for custom distributions."""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -15,11 +17,15 @@ if TYPE_CHECKING:
 
 
 class GMMFactory(nn.Module):
+    """Factory method for GMM."""
+
     def __init__(self, num_mixture: int) -> None:
+        """Initialize."""
         super().__init__()
         self.num_mixture = num_mixture
 
     def forward(self, tensor: Tensor) -> GMM:
+        """Build GMM from tensor."""
         # feat[batch_size*,dim*3*mix] -> feat[batch_size,dim*3*mix]
         feature, ps = pack([tensor], "* d")
 
@@ -46,6 +52,8 @@ class GMMFactory(nn.Module):
 
 
 class NormalFactory(nn.Module):
+    """Factory method for Normal."""
+
     def forward(self, tensor: Tensor) -> Normal:
         """Build Normal from tensor."""
         mean, scale = torch.chunk(tensor, chunks=2, dim=-1)
@@ -54,18 +62,22 @@ class NormalFactory(nn.Module):
 
 
 class CategoricalFactory(nn.Module):
+    """Factory method for Categorical."""
+
     def __init__(
         self,
         category_size: int,
         class_size: int,
         temperature: float = 1.0,
     ) -> None:
+        """Initialize."""
         super().__init__()
         self.category_size = category_size
         self.class_size = class_size
         self.temperature = temperature
 
     def forward(self, tensor: Tensor) -> Categorical:
+        """Generate Categorical from tensor."""
         logit, ps = pack([tensor], "* dim")
         logit = rearrange(
             tensor=logit,
@@ -79,19 +91,27 @@ class CategoricalFactory(nn.Module):
 
 
 class OneHotCategoricalFactory(nn.Module):
+    """Factory method for OneHotCategorical."""
+
     def __init__(self, temperature: float = 1.0) -> None:
+        """Initialize."""
         super().__init__()
         self.temperature = temperature
 
     def forward(self, tensor: Tensor) -> OneHotCategorical:
+        """Generate OneHotCategorical from tensor."""
         probs = torch.softmax(tensor / self.temperature, dim=-1)
         return OneHotCategorical(probs=probs)
 
 
 class IndependentFactory(nn.Module):
+    """Factory method for `Independent`."""
+
     def __init__(self, dim: int = -1) -> None:
+        """Initialize."""
         super().__init__()
         self.dim = dim
 
     def forward(self, dist: DistributionBase) -> Independent:
+        """Generate Independent from `Distribution`."""
         return dist.independent(dim=-1)
