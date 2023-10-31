@@ -2,8 +2,9 @@
 
 import pytest
 import torch
-from distribution_extention.discrete import Categorical, OneHotCategorical
 from torch import Tensor
+
+from distribution_extention.discrete import Categorical, OneHotCategorical
 
 
 class TestCategorical:

@@ -3,8 +3,9 @@
 
 import pytest
 import torch
-from distribution_extention.continuous import GMM, Normal
 from torch import Tensor
+
+from distribution_extention.continuous import GMM, Normal
 
 
 class TestNormal:

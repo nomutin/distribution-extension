@@ -2,15 +2,16 @@
 
 import pytest
 import torch
+from torch import Tensor
+
+from distribution_extention.base import Independent
 from distribution_extention.factory import (
     CategoricalFactory,
     GMMFactory,
+    IndependentFactory,
     NormalFactory,
     OneHotCategoricalFactory,
-    IndependentFactory,
 )
-from distribution_extention.base import Independent
-from torch import Tensor
 
 
 class TestGMMFactory:
@@ -81,6 +82,7 @@ class TestOneHotCategoricalFactory:
 
     @pytest.fixture()
     def init_tensor(self) -> Tensor:
+        """Initialize tensor."""
         batch_size = 8
         seq_len = 16
         self.class_size = 4
