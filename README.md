@@ -1,5 +1,11 @@
 # distrubution-extentions
 
+![python](https://img.shields.io/badge/python-3.8-blue)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![lint](https://github.com/nomutin/distribution-extention/actions/workflows/lint.yml/badge.svg)](https://github.com/nomutin/distribution-extention/actions/workflows/lint.yml)
+[![test](https://github.com/nomutin/distribution-extention/actions/workflows/test.yml/badge.svg)](https://github.com/nomutin/distribution-extention/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/nomutin/distribution-extention/graph/badge.svg?token=HTHTLULHPV)](https://codecov.io/gh/nomutin/distribution-extention)
+
 Simple `torch.distributions` wrappers for DL.
 
 ## API
