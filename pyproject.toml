@@ -26,11 +26,6 @@ dev-dependencies = [
 [tool.hatch.metadata]
 allow-direct-references = true
 
-[[tool.rye.sources]]
-name = "torch"
-url = "https://download.pytorch.org/whl/cpu"
-type = "index"
-
 [tool.rye.scripts]
 lint = { chain = [" black . --check", "isort . --check-only", "ruff src/ scripts/", "mypy ."] }
 format = { chain = [" black .", "isort .", "ruff --fix ."] }
