@@ -20,7 +20,7 @@ This module provides the following features.
 
     tensor = torch.rand([256, 100, 16])
     distribution = NormalFactory()(Tensor)
-    distribution.sample()  # -> Tensor[128, 100, 8]
+    distribution.sample()  # -> Tensor[256, 100, 8]
     ```
 
 - Easy independence
@@ -42,7 +42,7 @@ This module provides the following features.
 
     ```python
     distribution = Normal(loc=loc, scale=scale) [:, 0, :]
-    distribution.sample()  # -> Tensor[128, 8]
+    distribution.sample()  # -> Tensor[256, 8]
     ```
 
 - Gradient stop
