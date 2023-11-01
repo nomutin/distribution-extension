@@ -9,7 +9,6 @@
 -e file:.
 black==23.10.1
 click==8.1.7
-cmake==3.27.7
 coverage==7.3.2
 einops==0.7.0
 exceptiongroup==1.1.3
@@ -17,7 +16,6 @@ filelock==3.13.1
 iniconfig==2.0.0
 isort==5.12.0
 jinja2==3.1.2
-lit==17.0.4
 markupsafe==2.1.3
 mpmath==1.3.0
 mypy==1.6.1
@@ -32,6 +30,5 @@ pytest-cov==4.1.0
 ruff==0.1.3
 sympy==1.12
 tomli==2.0.1
-torch==2.0.1+cu117
-triton==2.0.0
+torch==2.0.1+cpu
 typing-extensions==4.8.0
