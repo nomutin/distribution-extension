@@ -12,7 +12,7 @@ Simple `torch.distributions` wrappers for DL.
 
 This module provides the following features.
 
-- Easy instanitate
+- Easy Instanitate
 
     ```python
     import torch
@@ -23,14 +23,14 @@ This module provides the following features.
     distribution.sample()  # -> Tensor[256, 100, 8]
     ```
 
-- Easy independence
+- Easy Independence
 
     ```python
     distribution = Normal(loc=loc, scale=scale)
     independent = distribution.independent(dim=1)
     ```
 
-- Device conversion
+- Device Conversion
 
     ```python
     device = torch.device("cuda:0")
@@ -41,11 +41,11 @@ This module provides the following features.
 - Slicing
 
     ```python
-    distribution = Normal(loc=loc, scale=scale) [:, 0, :]
+    distribution = Normal(loc=loc, scale=scale)[:, 0, :]
     distribution.sample()  # -> Tensor[256, 8]
     ```
 
-- Gradient stop
+- Stop Gradient
 
     ```python
     distribution = Normal(loc=loc, scale=scale) 
