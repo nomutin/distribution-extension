@@ -1,6 +1,6 @@
 [project]
 name = "distribution-extention"
-version = "0.1.0"
+version = "1.0.0"
 description = "Add your description here"
 dependencies = [
     "einops>=0.7.0",
