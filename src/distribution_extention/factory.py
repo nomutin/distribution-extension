@@ -10,14 +10,14 @@ from einops import pack, rearrange, unpack
 from torch import Tensor, nn
 
 from .continuous import GMM, Normal
-from .discrete import Categorical, OneHotCategorical
+from .discrete import MultiDimentionalOneHotCategorical, OneHotCategorical
 
 if TYPE_CHECKING:
     from .base import DistributionBase, Independent
 
 
 class GMMFactory(nn.Module):
-    """Factory method for GMM."""
+    """Factory method for `GMM`."""
 
     def __init__(self, num_mixture: int) -> None:
         """Initialize."""
@@ -52,7 +52,7 @@ class GMMFactory(nn.Module):
 
 
 class NormalFactory(nn.Module):
-    """Factory method for Normal."""
+    """Factory method for `Normal`."""
 
     def forward(self, tensor: Tensor) -> Normal:
         """Build Normal from tensor."""
@@ -61,8 +61,8 @@ class NormalFactory(nn.Module):
         return Normal(loc=mean, scale=scale)
 
 
-class CategoricalFactory(nn.Module):
-    """Factory method for Categorical."""
+class MultiDimentionalOneHotCategoricalFactory(nn.Module):
+    """Factory method for `MultiDimentionalOneHotCategorical`."""
 
     def __init__(
         self,
@@ -76,8 +76,8 @@ class CategoricalFactory(nn.Module):
         self.class_size = class_size
         self.temperature = temperature
 
-    def forward(self, tensor: Tensor) -> Categorical:
-        """Generate Categorical from tensor."""
+    def forward(self, tensor: Tensor) -> MultiDimentionalOneHotCategorical:
+        """Generate `MultiDimentionalOneHotCategorical` from tensor."""
         logit, ps = pack([tensor], "* dim")
         logit = rearrange(
             tensor=logit,
@@ -87,11 +87,11 @@ class CategoricalFactory(nn.Module):
         )
         logit = unpack(logit, ps, "* c s")[0]
         probs = torch.softmax(logit / self.temperature, dim=-1)
-        return Categorical(probs=probs)
+        return MultiDimentionalOneHotCategorical(probs=probs)
 
 
 class OneHotCategoricalFactory(nn.Module):
-    """Factory method for OneHotCategorical."""
+    """Factory method for `OneHotCategorical`."""
 
     def __init__(self, temperature: float = 1.0) -> None:
         """Initialize."""

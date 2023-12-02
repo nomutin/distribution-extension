@@ -12,7 +12,10 @@ from .base import DistributionBase
 _zero_size = torch.Size([])
 
 
-class Categorical(td.OneHotCategoricalStraightThrough, DistributionBase):
+class MultiDimentionalOneHotCategorical(
+    td.OneHotCategoricalStraightThrough,
+    DistributionBase,
+):
     """
     Extension of `torch.distributions.OneHotCategorical`.
 
