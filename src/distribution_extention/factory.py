@@ -10,7 +10,11 @@ from einops import pack, rearrange, unpack
 from torch import Tensor, nn
 
 from .continuous import GMM, Normal
-from .discrete import MultiDimentionalOneHotCategorical, OneHotCategorical
+from .discrete import (
+    Categorical,
+    MultiDimentionalOneHotCategorical,
+    OneHotCategorical,
+)
 
 if TYPE_CHECKING:
     from .base import DistributionBase, Independent
@@ -64,17 +68,11 @@ class NormalFactory(nn.Module):
 class MultiDimentionalOneHotCategoricalFactory(nn.Module):
     """Factory method for `MultiDimentionalOneHotCategorical`."""
 
-    def __init__(
-        self,
-        category_size: int,
-        class_size: int,
-        temperature: float = 1.0,
-    ) -> None:
+    def __init__(self, category_size: int, class_size: int) -> None:
         """Initialize."""
         super().__init__()
         self.category_size = category_size
         self.class_size = class_size
-        self.temperature = temperature
 
     def forward(self, tensor: Tensor) -> MultiDimentionalOneHotCategorical:
         """Generate `MultiDimentionalOneHotCategorical` from tensor."""
@@ -86,22 +84,23 @@ class MultiDimentionalOneHotCategoricalFactory(nn.Module):
             s=self.class_size,
         )
         logit = unpack(logit, ps, "* c s")[0]
-        probs = torch.softmax(logit / self.temperature, dim=-1)
-        return MultiDimentionalOneHotCategorical(probs=probs)
+        return MultiDimentionalOneHotCategorical(logits=logit)
 
 
 class OneHotCategoricalFactory(nn.Module):
     """Factory method for `OneHotCategorical`."""
 
-    def __init__(self, temperature: float = 1.0) -> None:
-        """Initialize."""
-        super().__init__()
-        self.temperature = temperature
-
     def forward(self, tensor: Tensor) -> OneHotCategorical:
         """Generate OneHotCategorical from tensor."""
-        probs = torch.softmax(tensor / self.temperature, dim=-1)
-        return OneHotCategorical(probs=probs)
+        return OneHotCategorical(logits=tensor)
+
+
+class CategoricalFactory(nn.Module):
+    """Factory method for `Categorical`."""
+
+    def forward(self, tensor: Tensor) -> Categorical:
+        """Generate Categorical from tensor."""
+        return Categorical(logits=tensor)
 
 
 class IndependentFactory(nn.Module):

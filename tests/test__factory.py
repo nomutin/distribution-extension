@@ -6,6 +6,7 @@ from torch import Tensor
 
 from distribution_extention.base import Independent
 from distribution_extention.factory import (
+    CategoricalFactory,
     GMMFactory,
     IndependentFactory,
     MultiDimentionalOneHotCategoricalFactory,
@@ -94,6 +95,28 @@ class TestOneHotCategoricalFactory:
         factory = OneHotCategoricalFactory()
         dist = factory(init_tensor)
         assert dist.rsample().shape == self.sample_shape
+
+
+class TestCategoricalFactory:
+    """Tests for `CategoricalFactory`."""
+
+    @pytest.fixture()
+    def init_tensor(self) -> Tensor:
+        """Initialize tensor."""
+        batch_size = 8
+        seq_len = 16
+        self.sample_shape = torch.Size([batch_size, seq_len])
+        zeros = torch.zeros([batch_size, seq_len, 3]) * -10
+        ones = torch.ones([batch_size, seq_len, 1]) * 10
+        return torch.cat([zeros, ones], dim=-1)
+
+    def test_forward(self, init_tensor: Tensor) -> None:
+        """Test `forward()`."""
+        factory = CategoricalFactory()
+        dist = factory(init_tensor)
+        sample = dist.sample()
+        assert sample.shape == self.sample_shape
+        assert torch.equal(sample, torch.ones_like(sample) * 3)
 
 
 class TestIndependentFactory:
