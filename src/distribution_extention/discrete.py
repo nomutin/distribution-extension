@@ -12,7 +12,10 @@ from .base import DistributionBase
 _zero_size = torch.Size([])
 
 
-class Categorical(td.OneHotCategoricalStraightThrough, DistributionBase):
+class MultiDimentionalOneHotCategorical(
+    td.OneHotCategoricalStraightThrough,
+    DistributionBase,
+):
     """
     Extension of `torch.distributions.OneHotCategorical`.
 
@@ -46,3 +49,16 @@ class OneHotCategorical(td.OneHotCategoricalStraightThrough, DistributionBase):
     def parameters(self) -> dict[str, Tensor]:
         """Set `probs` (not `logits`) as parameter."""
         return {"probs": self.probs}
+
+
+class Categorical(td.Categorical, DistributionBase):
+    """Extension of `torch.distributions.Categorical`."""
+
+    @property
+    def parameters(self) -> dict[str, Tensor]:
+        """Set `probs` (not `logits`) as parameter."""
+        return {"probs": self.probs}
+
+    def rsample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
+        """Sample categorical value."""
+        return super().sample(sample_shape)
