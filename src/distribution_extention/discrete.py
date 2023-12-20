@@ -61,4 +61,12 @@ class Categorical(td.Categorical, DistributionBase):
 
     def rsample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
         """Sample categorical value."""
-        return super().sample(sample_shape)
+        return super().sample(sample_shape).unsqueeze(-1)
+
+    def sample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
+        """Sample categorical value."""
+        return super().sample(sample_shape).unsqueeze(-1)
+
+    def log_prob(self, value: Tensor) -> Tensor:
+        """Calculate log probability of categorical value."""
+        return super().log_prob(value.squeeze(-1))

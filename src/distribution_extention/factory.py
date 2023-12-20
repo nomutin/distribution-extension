@@ -106,7 +106,7 @@ class CategoricalFactory(nn.Module):
 class IndependentFactory(nn.Module):
     """Factory method for `Independent`."""
 
-    def __init__(self, dim: int = -1) -> None:
+    def __init__(self, dim: int) -> None:
         """Initialize."""
         super().__init__()
         self.dim = dim

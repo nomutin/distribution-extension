@@ -105,7 +105,7 @@ class TestCategoricalFactory:
         """Initialize tensor."""
         batch_size = 8
         seq_len = 16
-        self.sample_shape = torch.Size([batch_size, seq_len])
+        self.sample_shape = torch.Size([batch_size, seq_len, 1])
         zeros = torch.zeros([batch_size, seq_len, 3]) * -10
         ones = torch.ones([batch_size, seq_len, 1]) * 10
         return torch.cat([zeros, ones], dim=-1)
