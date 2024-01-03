@@ -28,7 +28,7 @@ def kl_divergence(
     if use_balancing:
         return _kl_balancing(q=q, p=p)
 
-    return torch.clamp(td.kl_divergence(q=q, p=p).mean(), min=3.0)
+    return td.kl_divergence(q=q, p=p).mean()
 
 
 def _kl_balancing(
