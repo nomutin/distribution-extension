@@ -10,10 +10,10 @@ import torch.distributions as td
 from einops import repeat
 from torch import Tensor
 
-from .base import DistributionBase, Independent
+from .base import Distribution, Independent
 from .continuous import GMM, Normal
 
-T = TypeVar("T", Independent, DistributionBase)
+T = TypeVar("T", Independent, Distribution)
 
 
 def kl_divergence(

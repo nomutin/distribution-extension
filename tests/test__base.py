@@ -3,8 +3,19 @@
 import pytest
 import torch
 
-from distribution_extention.base import DistributionBase, Independent
+from distribution_extention.base import Distribution, Independent
 from distribution_extention.continuous import Normal
+
+
+class TestDistribution:
+    """Tests for `Distribution`."""
+
+    def test_parameters(self) -> None:
+        """Test `DistributionBase.parameters()`."""
+        dist = Distribution()
+        with pytest.raises(NotImplementedError) as e:
+            _ = dist.parameters
+        assert e.type == NotImplementedError
 
 
 class TestIndependent:
@@ -86,14 +97,3 @@ class TestIndependent:
         dist = dist.unsqueeze(0)
         expected = torch.Size([1, self.batch, self.seq_len, self.dim])
         assert dist.sample().shape == expected
-
-
-class TestDistributionBase:
-    """Tests for `DistributionBase`."""
-
-    def test_parameters(self) -> None:
-        """Test `DistributionBase.parameters()`."""
-        dist = DistributionBase()
-        with pytest.raises(NotImplementedError) as e:
-            _ = dist.parameters
-        assert e.type == NotImplementedError

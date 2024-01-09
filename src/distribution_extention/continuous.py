@@ -7,12 +7,12 @@ import torch.distributions as td
 from torch import Tensor
 from torch.distributions import constraints
 
-from .base import DistributionBase
+from .base import Distribution
 
 _zero_size = torch.Size([])
 
 
-class Normal(td.Normal, DistributionBase):
+class Normal(td.Normal, Distribution):
     """Extension of `torch.distributions.Normal` ."""
 
     def kl_divergence_starndard_normal(self) -> Tensor:
@@ -20,13 +20,8 @@ class Normal(td.Normal, DistributionBase):
         kld = 1 + self.variance.log() - self.mean.pow(2) - self.variance
         return kld.sum().mul(-0.5)
 
-    @property
-    def parameters(self) -> dict[str, Tensor]:
-        """Define `loc` and `scale` as parameters of self."""
-        return {"loc": self.loc, "scale": self.scale}
 
-
-class GMM(DistributionBase, td.Distribution):
+class GMM(Distribution, td.Distribution):
     """
     Gaussian Mixture Model Implementation.
 

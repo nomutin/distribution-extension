@@ -1,6 +1,6 @@
 """Custom Distribution classes."""
 
-from .base import DistributionBase, Independent
+from .base import Distribution, Independent
 from .continuous import GMM, Normal
 from .discrete import (
     Categorical,
@@ -18,7 +18,7 @@ from .factory import (
 from .kl import kl_divergence
 
 __all__ = [
-    "DistributionBase",
+    "Distribution",
     "Independent",
     "GMM",
     "Normal",

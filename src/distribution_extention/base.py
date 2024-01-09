@@ -11,7 +11,45 @@ from torch import Tensor
 _slicelike = Union[slice, int, Tuple[Union[slice, int], ...]]
 
 
-class Independent(td.Independent):
+class Distribution(td.Distribution):
+    """Abstract class for Custom Distribution."""
+
+    @property
+    def parameters(self) -> dict[str, Tensor]:
+        """Define distribion parapers as dict."""
+        return {k: getattr(self, k) for k in self.arg_constraints}
+
+    def independent(self, dim: int) -> Independent:
+        """Create `Independent` that has `self` as `base_distribution`."""
+        return Independent(self, dim)
+
+    def to(self, device: torch.device) -> Distribution:
+        """Convert device."""
+        params = {k: v.to(device) for k, v in self.parameters.items()}
+        return type(self)(**params, validate_args=self._validate_args)
+
+    def squeeze(self, dim: int) -> Distribution:
+        """Squeeze distribution."""
+        params = {k: v.squeeze(dim) for k, v in self.parameters.items()}
+        return type(self)(**params, validate_args=self._validate_args)
+
+    def unsqueeze(self, dim: int) -> Distribution:
+        """Unsqueeze distribution."""
+        params = {k: v.unsqueeze(dim) for k, v in self.parameters.items()}
+        return type(self)(**params, validate_args=self._validate_args)
+
+    def __getitem__(self, loc: _slicelike) -> Distribution:
+        """Silice distribution."""
+        params = {k: v[loc] for k, v in self.parameters.items()}
+        return type(self)(**params, validate_args=self._validate_args)
+
+    def detach(self) -> Distribution:
+        """Detach computational graph."""
+        params = {k: v.detach() for k, v in self.parameters.items()}
+        return type(self)(**params, validate_args=self._validate_args)
+
+
+class Independent(td.Independent, Distribution):
     """
     Extension of `torch.distributions.Independent`.
 
@@ -21,7 +59,7 @@ class Independent(td.Independent):
 
     def __init__(
         self,
-        base_distribution: DistributionBase,
+        base_distribution: Distribution,
         reinterpreted_batch_ndims: int,
     ) -> None:
         """Initialize."""
@@ -61,41 +99,3 @@ class Independent(td.Independent):
             base_distribution=self.base_dist.unsqueeze(dim),
             reinterpreted_batch_ndims=self.reinterpreted_batch_ndims,
         )
-
-
-class DistributionBase(td.Distribution):
-    """Abstract class for Custom Distribution."""
-
-    @property
-    def parameters(self) -> dict[str, Tensor]:
-        """Define distribion parapers as dict."""
-        raise NotImplementedError
-
-    def independent(self, dim: int) -> Independent:
-        """Create `Independent` that has `self` as `base_distribution`."""
-        return Independent(self, dim)
-
-    def to(self, device: torch.device) -> DistributionBase:
-        """Convert device."""
-        params = {k: v.to(device) for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)
-
-    def squeeze(self, dim: int) -> DistributionBase:
-        """Squeeze distribution."""
-        params = {k: v.squeeze(dim) for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)
-
-    def unsqueeze(self, dim: int) -> DistributionBase:
-        """Unsqueeze distribution."""
-        params = {k: v.unsqueeze(dim) for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)
-
-    def __getitem__(self, loc: _slicelike) -> DistributionBase:
-        """Silice distribution."""
-        params = {k: v[loc] for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)
-
-    def detach(self) -> DistributionBase:
-        """Detach computational graph."""
-        params = {k: v.detach() for k, v in self.parameters.items()}
-        return type(self)(**params, validate_args=self._validate_args)

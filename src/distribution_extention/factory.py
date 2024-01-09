@@ -17,7 +17,7 @@ from .discrete import (
 )
 
 if TYPE_CHECKING:
-    from .base import DistributionBase, Independent
+    from .base import Distribution, Independent
 
 
 class GMMFactory(nn.Module):
@@ -111,6 +111,6 @@ class IndependentFactory(nn.Module):
         super().__init__()
         self.dim = dim
 
-    def forward(self, dist: DistributionBase) -> Independent:
+    def forward(self, dist: Distribution) -> Independent:
         """Generate Independent from `Distribution`."""
         return dist.independent(dim=self.dim)
