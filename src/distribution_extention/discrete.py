@@ -7,14 +7,14 @@ import torch.distributions as td
 from einops import pack, rearrange, unpack
 from torch import Tensor
 
-from .base import DistributionBase
+from .base import Distribution
 
 _zero_size = torch.Size([])
 
 
 class MultiDimentionalOneHotCategorical(
     td.OneHotCategoricalStraightThrough,
-    DistributionBase,
+    Distribution,
 ):
     """
     Extension of `torch.distributions.OneHotCategorical`.
@@ -38,7 +38,7 @@ class MultiDimentionalOneHotCategorical(
         return {"probs": self.probs}
 
 
-class OneHotCategorical(td.OneHotCategoricalStraightThrough, DistributionBase):
+class OneHotCategorical(td.OneHotCategoricalStraightThrough, Distribution):
     """
     Extension of `torch.distributions.OneHotCategorical`.
 
@@ -51,7 +51,7 @@ class OneHotCategorical(td.OneHotCategoricalStraightThrough, DistributionBase):
         return {"probs": self.probs}
 
 
-class Categorical(td.Categorical, DistributionBase):
+class Categorical(td.Categorical, Distribution):
     """Extension of `torch.distributions.Categorical`."""
 
     @property
