@@ -16,6 +16,17 @@ from .continuous import GMM, Normal
 T = TypeVar("T", Independent, Distribution)
 
 
+def kl_divergence(
+    q: Independent,
+    p: Independent,
+    use_balancing: bool,  # noqa: FBT001
+) -> Tensor:
+    """Calculate KL divergence between q and p."""
+    if use_balancing:
+        return kl_balancing(q=q, p=p)
+    return td.kl_divergence(q=q, p=p).mean()
+
+
 def kl_balancing(
     q: Independent,
     p: Independent,
