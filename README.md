@@ -1,10 +1,10 @@
-# distrubution-extentions
+# distrubution-extensions
 
 ![python](https://img.shields.io/badge/python-3.8-blue)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![lint](https://github.com/nomutin/distribution-extention/actions/workflows/lint.yml/badge.svg)](https://github.com/nomutin/distribution-extention/actions/workflows/lint.yml)
-[![test](https://github.com/nomutin/distribution-extention/actions/workflows/test.yml/badge.svg)](https://github.com/nomutin/distribution-extention/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/nomutin/distribution-extention/graph/badge.svg?token=HTHTLULHPV)](https://codecov.io/gh/nomutin/distribution-extention)
+[![lint](https://github.com/nomutin/distribution-extension/actions/workflows/lint.yml/badge.svg)](https://github.com/nomutin/distribution-extension/actions/workflows/lint.yml)
+[![test](https://github.com/nomutin/distribution-extension/actions/workflows/test.yml/badge.svg)](https://github.com/nomutin/distribution-extension/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/nomutin/distribution-extension/graph/badge.svg?token=HTHTLULHPV)](https://codecov.io/gh/nomutin/distribution-extension)
 
 Simple `torch.distributions` wrappers for DL.
 
@@ -16,7 +16,7 @@ This module provides the following features.
 
     ```python
     import torch
-    from distrubution_extentions import NormalFactory
+    from distrubution_extensions import NormalFactory
 
     tensor = torch.rand([256, 100, 16])
     distribution = NormalFactory()(Tensor)

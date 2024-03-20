@@ -1,11 +1,10 @@
-"""Tests for `distribution_extention/continuous.py`."""
-
+"""Tests for `distribution_extension/continuous.py`."""
 
 import pytest
 import torch
 from torch import Tensor
 
-from distribution_extention.continuous import GMM, Normal
+from distribution_extension.continuous import GMM, Normal
 
 
 class TestNormal:

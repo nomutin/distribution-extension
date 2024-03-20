@@ -1,9 +1,8 @@
 """KL divergence between two custom distributions."""
 
-
 from __future__ import annotations
 
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 import torch
 import torch.distributions as td
@@ -11,7 +10,9 @@ from einops import repeat
 from torch import Tensor
 
 from .base import Distribution, Independent
-from .continuous import GMM, Normal
+
+if TYPE_CHECKING:
+    from .continuous import GMM, Normal
 
 T = TypeVar("T", Independent, Distribution)
 
@@ -33,8 +34,7 @@ def kl_balancing(
     q_factor: float = 0.5,
     p_factor: float = 0.1,
 ) -> Tensor:
-    """
-    KL Balancing.
+    """KL Balancing.
 
     ```
     kl_loss =       alpha * compute_kl(stop_grad(posterior), prior)
@@ -45,6 +45,7 @@ def kl_balancing(
     ----------
     * https://arxiv.org/abs/2010.02193 [Dreamer V2]
     * https://arxiv.org/abs/2301.04104 [Dreamer V3]
+
     """
     dyn = td.kl_divergence(q.detach(), p).mean()
     rep = td.kl_divergence(q, p.detach()).mean()
@@ -54,8 +55,7 @@ def kl_balancing(
 
 
 def gmm_loss(gmm: GMM, normal: Normal) -> Tensor:
-    """
-    Compute the gmm loss.
+    """Compute the gmm loss.
 
     Compute minus the log probability of batch under the GMM model described
     by mus, sigmas, pi. Precisely, with bs1, bs2, ... the sizes of the batch
@@ -79,6 +79,7 @@ def gmm_loss(gmm: GMM, normal: Normal) -> Tensor:
 
     normal : td.Normal
         mean, scale : [batch_size, seq_len, dim]
+
     """
     batch = repeat(normal.rsample(), "b t d -> b t d m", m=gmm.num_mixture)
     g_log_probs = td.Normal(gmm.mean, gmm.scale).log_prob(batch)

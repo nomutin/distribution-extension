@@ -1,1 +1,1 @@
-"""Tests for `distribution_extention/kl.py`."""
+"""Tests for `distribution_extension/kl.py`."""

@@ -1,5 +1,5 @@
 [project]
-name = "distribution-extention"
+name = "distribution-extension"
 version = "1.0.1"
 description = "Add your description here"
 dependencies = [
@@ -18,18 +18,13 @@ dev-dependencies = [
     "pytest-cov>=4.1.0",
     "mypy>=1.6.1",
     "isort>=5.12.0",
-    "ruff>=0.1.3",
     "black>=23.10.1",
     "torch==2.0.1",
+    "ruff>=0.3.3",
 ]
 
 [tool.hatch.metadata]
 allow-direct-references = true
-
-[tool.rye.scripts]
-lint = { chain = [" black . --check", "isort . --check-only", "ruff src/ scripts/", "mypy ."] }
-format = { chain = [" black .", "isort .", "ruff --fix ."] }
-test = { chain = ["pytest -ra --cov=src --cov-report=term --cov-report=xml"] }
 
 [tool.black]
 line-length = 79
@@ -46,14 +41,25 @@ python_version = 3.8
 ignore_missing_imports = true
 
 [tool.ruff]
-select = ["ALL"]
-ignore = ["D203", "D212", "S101", "ANN101", "I",]
+output-format = "grouped"
+line-length = 79
+target-version = "py38"
+
+[tool.ruff.lint]
 fixable = ["ALL"]
 unfixable = []
-exclude = [".git", ".ruff_cache", ".venv",]
-line-length = 79
+select = ["ALL"]
+ignore = ["S101", "ANN101", "I",]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-target-version = "py38"
+
+[tool.ruff.format]
+preview = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 4
 
 [tool.isort]
 profile = "black"

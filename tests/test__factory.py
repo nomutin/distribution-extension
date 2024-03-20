@@ -1,11 +1,11 @@
-"""Tests for `distribution_extention/factory.py`."""
+"""Tests for `distribution_extension/factory.py`."""
 
 import pytest
 import torch
 from torch import Tensor
 
-from distribution_extention.base import Independent
-from distribution_extention.factory import (
+from distribution_extension.base import Independent
+from distribution_extension.factory import (
     CategoricalFactory,
     GMMFactory,
     IndependentFactory,

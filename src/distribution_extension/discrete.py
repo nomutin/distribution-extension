@@ -16,8 +16,7 @@ class MultiDimentionalOneHotCategorical(
     td.OneHotCategoricalStraightThrough,
     Distribution,
 ):
-    """
-    Extension of `torch.distributions.OneHotCategorical`.
+    """Extension of `torch.distributions.OneHotCategorical`.
 
     This class is used to represent a 2D categorical distribution
     with arguments `class_size` and `category_size`.
@@ -39,8 +38,7 @@ class MultiDimentionalOneHotCategorical(
 
 
 class OneHotCategorical(td.OneHotCategoricalStraightThrough, Distribution):
-    """
-    Extension of `torch.distributions.OneHotCategorical`.
+    """Extension of `torch.distributions.OneHotCategorical`.
 
     This class is used to represent a 1D categorical distribution.
     """

@@ -1,10 +1,10 @@
-"""Tests for `distribution_extention/base.py`."""
+"""Tests for `distribution_extension/base.py`."""
 
 import pytest
 import torch
 
-from distribution_extention.base import Distribution, Independent
-from distribution_extention.continuous import Normal
+from distribution_extension.base import Distribution, Independent
+from distribution_extension.continuous import Normal
 
 
 class TestDistribution:

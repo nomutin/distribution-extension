@@ -1,10 +1,10 @@
-"""Tests for `distribution_extention/discrete.py`,."""
+"""Tests for `distribution_extension/discrete.py`,."""
 
 import pytest
 import torch
 from torch import Tensor
 
-from distribution_extention.discrete import (
+from distribution_extension.discrete import (
     Categorical,
     MultiDimentionalOneHotCategorical,
     OneHotCategorical,

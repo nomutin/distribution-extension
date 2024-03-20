@@ -5,6 +5,8 @@
 #   pre: false
 #   features: []
 #   all-features: false
+#   with-sources: false
 
 -e file:.
 einops==0.7.0
+    # via distribution-extension

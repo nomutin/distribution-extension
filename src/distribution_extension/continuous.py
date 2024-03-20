@@ -22,12 +22,12 @@ class Normal(td.Normal, Distribution):
 
 
 class GMM(Distribution, td.Distribution):
-    """
-    Gaussian Mixture Model Implementation.
+    """Gaussian Mixture Model Implementation.
 
     References
     ----------
     * https://geostatisticslessons.com/lessons/gmm
+
     """
 
     def __init__(
@@ -37,8 +37,7 @@ class GMM(Distribution, td.Distribution):
         scale: Tensor,
         validate_args: None | bool = None,
     ) -> None:
-        """
-        Gaussian Mixture Model.
+        """Gaussian Mixture Model.
 
         `probs`, `loc`, `scale` must have the same shape:
         `[batch_size*, dim, num_mix]`.

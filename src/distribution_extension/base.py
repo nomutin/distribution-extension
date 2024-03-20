@@ -50,8 +50,7 @@ class Distribution(td.Distribution):
 
 
 class Independent(td.Independent, Distribution):
-    """
-    Extension of `torch.distributions.Independent`.
+    """Extension of `torch.distributions.Independent`.
 
     This class is not instantiated directly,
     but by `DistributionBase.independent()`.
