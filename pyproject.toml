@@ -26,12 +26,6 @@ dev-dependencies = [
 [tool.hatch.metadata]
 allow-direct-references = true
 
-[tool.hatch.build.targets.sdist]
-include = ["src/distribution_extension/py.typed"]
-
-[tool.hatch.build.targets.wheel]
-include = ["src/distribution_extension/py.typed"]
-
 [tool.black]
 line-length = 79
 
