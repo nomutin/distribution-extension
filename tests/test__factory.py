@@ -2,17 +2,16 @@
 
 import pytest
 import torch
-from torch import Tensor
-
 from distribution_extension.base import Independent
 from distribution_extension.factory import (
     CategoricalFactory,
     GMMFactory,
     IndependentFactory,
-    MultiDimentionalOneHotCategoricalFactory,
+    MultiOneHotFactory,
     NormalFactory,
     OneHotCategoricalFactory,
 )
+from torch import Tensor
 
 
 class TestGMMFactory:
@@ -54,8 +53,8 @@ class TestNormalFactory:
         assert dist.rsample().shape == self.sample_shape
 
 
-class TestMultiDimentionalOneHotCategoricalFactory:
-    """Tests for `MultiDimentionalOneHotCategoricalFactory`."""
+class TestMultiOneHotFactory:
+    """Tests for `MultiOneHotFactory`."""
 
     @pytest.fixture()
     def init_tensor(self) -> Tensor:
@@ -70,7 +69,7 @@ class TestMultiDimentionalOneHotCategoricalFactory:
 
     def test_forward(self, init_tensor: Tensor) -> None:
         """Test `forward()`."""
-        factory = MultiDimentionalOneHotCategoricalFactory(
+        factory = MultiOneHotFactory(
             category_size=self.category_size,
             class_size=self.class_size,
         )

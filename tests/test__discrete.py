@@ -2,17 +2,16 @@
 
 import pytest
 import torch
-from torch import Tensor
-
 from distribution_extension.discrete import (
     Categorical,
-    MultiDimentionalOneHotCategorical,
+    MultiOneHot,
     OneHotCategorical,
 )
+from torch import Tensor
 
 
-class TestMultiDimentionalOneHotCategorical:
-    """Tests for `Categorical`."""
+class TestMultiOneHot:
+    """Tests for `MultiOneHot`."""
 
     @pytest.fixture()
     def init_tensor(self) -> Tensor:
@@ -28,13 +27,13 @@ class TestMultiDimentionalOneHotCategorical:
 
     def test_rsample(self, init_tensor: Tensor) -> None:
         """Test `rsample()`."""
-        dist = MultiDimentionalOneHotCategorical(init_tensor)
+        dist = MultiOneHot(init_tensor)
         sample = dist.rsample()
         assert sample.shape == self.sample_shape
 
     def test_parameters(self, init_tensor: Tensor) -> None:
         """Test `parameters`."""
-        dist = MultiDimentionalOneHotCategorical(init_tensor)
+        dist = MultiOneHot(init_tensor)
         assert "probs" in dist.parameters
 
 

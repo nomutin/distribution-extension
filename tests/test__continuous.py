@@ -2,9 +2,8 @@
 
 import pytest
 import torch
-from torch import Tensor
-
 from distribution_extension.continuous import GMM, Normal
+from torch import Tensor
 
 
 class TestNormal:

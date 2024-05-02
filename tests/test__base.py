@@ -2,7 +2,6 @@
 
 import pytest
 import torch
-
 from distribution_extension.base import Distribution, Independent
 from distribution_extension.continuous import Normal
 
@@ -15,7 +14,7 @@ class TestDistribution:
         dist = Distribution()
         with pytest.raises(NotImplementedError) as e:
             _ = dist.parameters
-        assert e.type == NotImplementedError
+        assert e.type is NotImplementedError
 
 
 class TestIndependent:
