@@ -2,10 +2,10 @@
 
 import torch
 from distribution_extension.continuous import Normal
-from distribution_extension.utils import cat, stack
+from distribution_extension.utils import cat_distribution, stack_distribution
 
 
-def test__cat() -> None:
+def test__cat_distribution() -> None:
     """Test `cat()`."""
     batch_size, dim = 8, 16
     num_dist = 4
@@ -16,7 +16,7 @@ def test__cat() -> None:
         )
         for _ in range(num_dist)
     ]
-    cat_dist = cat(dist_list, dim=1)
+    cat_dist = cat_distribution(dist_list, dim=1)
     result = torch.testing.assert_close(
         actual=cat_dist.rsample(),
         expected=torch.zeros([batch_size, dim * num_dist]),
@@ -27,8 +27,8 @@ def test__cat() -> None:
     assert result is None
 
 
-def test__stack() -> None:
-    """Test `stack()`."""
+def test__stack_distribution() -> None:
+    """Test `stack_distribution()`."""
     batch_size, dim = 8, 16
     num_dist = 4
     dist_list = [
@@ -38,7 +38,7 @@ def test__stack() -> None:
         )
         for _ in range(num_dist)
     ]
-    stack_dist = stack(dist_list, dim=1)
+    stack_dist = stack_distribution(dist_list, dim=1)
     result = torch.testing.assert_close(
         actual=stack_dist.rsample(),
         expected=torch.zeros([batch_size, num_dist, dim]),

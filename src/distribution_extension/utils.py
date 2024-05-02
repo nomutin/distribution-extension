@@ -9,7 +9,7 @@ from distribution_extension.base import Distribution
 T = TypeVar("T", bound=Distribution)
 
 
-def stack(distribution_list: Sequence[T], dim: int) -> T:
+def stack_distribution(distribution_list: Sequence[T], dim: int) -> T:
     """Stack distributions along given dimentions."""
     parameters = {}
     for parameter_name in distribution_list[0].parameters:
@@ -18,7 +18,7 @@ def stack(distribution_list: Sequence[T], dim: int) -> T:
     return distribution_list[0].__class__(**parameters)
 
 
-def cat(distribution_list: Sequence[T], dim: int) -> T:
+def cat_distribution(distribution_list: Sequence[T], dim: int) -> T:
     """Concatenate distributions along given dimentions."""
     parameters = {}
     for parameter_name in distribution_list[0].parameters:
