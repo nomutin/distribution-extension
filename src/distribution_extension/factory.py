@@ -12,7 +12,7 @@ from torch import Tensor, nn
 from .continuous import GMM, Normal
 from .discrete import (
     Categorical,
-    MultiDimentionalOneHotCategorical,
+    MultiOneHot,
     OneHotCategorical,
 )
 
@@ -65,7 +65,7 @@ class NormalFactory(nn.Module):
         return Normal(loc=mean, scale=scale)
 
 
-class MultiDimentionalOneHotCategoricalFactory(nn.Module):
+class MultiOneHotFactory(nn.Module):
     """Factory method for `MultiDimentionalOneHotCategorical`."""
 
     def __init__(self, category_size: int, class_size: int) -> None:
@@ -74,7 +74,7 @@ class MultiDimentionalOneHotCategoricalFactory(nn.Module):
         self.category_size = category_size
         self.class_size = class_size
 
-    def forward(self, tensor: Tensor) -> MultiDimentionalOneHotCategorical:
+    def forward(self, tensor: Tensor) -> MultiOneHot:
         """Generate `MultiDimentionalOneHotCategorical` from tensor."""
         logit, ps = pack([tensor], "* dim")
         logit = rearrange(
@@ -84,7 +84,7 @@ class MultiDimentionalOneHotCategoricalFactory(nn.Module):
             s=self.class_size,
         )
         logit = unpack(logit, ps, "* c s")[0]
-        return MultiDimentionalOneHotCategorical(logits=logit)
+        return MultiOneHot(logits=logit)
 
 
 class OneHotCategoricalFactory(nn.Module):

@@ -2,14 +2,10 @@ clean:
 	rm -rf .mypy_cache/ .pytest_cache/ .ruff_cache && rm -f .coverage coverage.xml && find . -type d -name __pycache__ -exec rm -r {} +
 
 format:
-	black . && \
 	ruff check --fix . && \
-	ruff format . && \
-	isort .
+	ruff format .
 
 lint:
-	isort . --check && \
-	black . --check && \
 	ruff check .
 
 test:

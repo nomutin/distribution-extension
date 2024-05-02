@@ -1,3 +1,4 @@
+# ruff: noqa: FBT001
 """Custom continuous distributions."""
 
 from __future__ import annotations

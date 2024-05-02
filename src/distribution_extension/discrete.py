@@ -12,7 +12,7 @@ from .base import Distribution
 _zero_size = torch.Size([])
 
 
-class MultiDimentionalOneHotCategorical(
+class MultiOneHot(
     td.OneHotCategoricalStraightThrough,
     Distribution,
 ):

@@ -1,6 +1,6 @@
 [project]
 name = "distribution-extension"
-version = "1.0.2"
+version = "1.0.3"
 description = "Add your description here"
 dependencies = [
     "einops>=0.7.0",
@@ -17,8 +17,6 @@ managed = true
 dev-dependencies = [
     "pytest-cov>=4.1.0",
     "mypy>=1.6.1",
-    "isort>=5.12.0",
-    "black>=23.10.1",
     "torch==2.0.1",
     "ruff>=0.3.3",
 ]
@@ -41,15 +39,15 @@ python_version = 3.8
 ignore_missing_imports = true
 
 [tool.ruff]
-output-format = "grouped"
 line-length = 79
 target-version = "py38"
 
 [tool.ruff.lint]
+preview = true
 fixable = ["ALL"]
 unfixable = []
 select = ["ALL"]
-ignore = ["S101", "ANN101", "I",]
+ignore = ["S101", "CPY001", "PLR6301",]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.format]
@@ -61,6 +59,5 @@ convention = "numpy"
 [tool.ruff.lint.mccabe]
 max-complexity = 4
 
-[tool.isort]
-profile = "black"
-line_length = 79
+[tool.ruff.lint.isort]
+known-first-party = ["distribution_extention"]
