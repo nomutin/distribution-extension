@@ -12,10 +12,7 @@ from .base import Distribution
 _zero_size = torch.Size([])
 
 
-class MultiOneHot(
-    td.OneHotCategoricalStraightThrough,
-    Distribution,
-):
+class MultiOneHot(td.OneHotCategoricalStraightThrough, Distribution):
     """Extension of `torch.distributions.OneHotCategorical`.
 
     This class is used to represent a 2D categorical distribution

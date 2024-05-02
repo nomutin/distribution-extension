@@ -1,6 +1,6 @@
 [project]
 name = "distribution-extension"
-version = "1.0.3"
+version = "1.0.4"
 description = "Add your description here"
 dependencies = [
     "einops>=0.7.0",
@@ -15,9 +15,9 @@ build-backend = "hatchling.build"
 [tool.rye]
 managed = true
 dev-dependencies = [
+    "torch==2.0.1",
     "pytest-cov>=4.1.0",
     "mypy>=1.6.1",
-    "torch==2.0.1",
     "ruff>=0.4.2",
 ]
 
@@ -47,7 +47,13 @@ preview = true
 fixable = ["ALL"]
 unfixable = []
 select = ["ALL"]
-ignore = ["S101", "CPY001", "PLR6301",]
+ignore = [
+    "S101",     # assert
+    "CPY001",   # missing-copyright-notice
+    "PLR6301",  # no-self-use
+    "COM812",   # missing-trailing-comma
+    "ISC001",   # single-line-implicit-string-concatenation
+]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.format]
