@@ -85,7 +85,7 @@ def gmm_loss(gmm: GMM, normal: Normal) -> Tensor:
     g_log_probs = td.Normal(gmm.mean, gmm.scale).log_prob(batch)
     g_log_probs = gmm.probs + torch.sum(g_log_probs, dim=-2)
     max_log_probs = torch.max(g_log_probs, dim=-2, keepdim=True)[0]
-    g_log_probs = g_log_probs - max_log_probs
+    g_log_probs -= max_log_probs
 
     g_probs = torch.exp(g_log_probs)
     probs = torch.sum(g_probs, dim=-2)
