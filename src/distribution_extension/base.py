@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Tuple, Union
+from typing import Any, Tuple, Union
 
 import torch
 import torch.distributions as td
@@ -13,6 +13,10 @@ _slicelike = Union[slice, int, Tuple[Union[slice, int], ...]]
 
 class Distribution(td.Distribution):
     """Abstract class for Custom Distribution."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:  # noqa: ANN401
+        """Initialize."""
+        super().__init__(*args, **kwargs)
 
     @property
     def parameters(self) -> dict[str, Tensor]:
