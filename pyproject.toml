@@ -34,6 +34,10 @@ filterwarnings = [
     'ignore:distutils Version classes are deprecated.:DeprecationWarning',
 ]
 
+[rye.scripts]
+test = "rye run pytest -ra --cov=src --cov-report=term --cov-report=xml"
+clean = "rm -rf .mypy_cache/ .pytest_cache/ .ruff_cache && rm -f .coverage coverage.xml && find . -type d -name __pycache__ -exec rm -r {} +"
+
 [tool.mypy]
 python_version = 3.8
 ignore_missing_imports = true

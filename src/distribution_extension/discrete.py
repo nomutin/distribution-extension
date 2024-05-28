@@ -21,6 +21,14 @@ class MultiOneHot(td.OneHotCategoricalStraightThrough, Distribution):
     A simpler usage is to use `.OneHotCategorical`.
     """
 
+    def __init__(self, logits: Tensor) -> None:
+        """Initialize."""
+        super().__init__(logits=logits)
+
+    def sample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
+        """Sample multi-dimentional categorical value."""
+        return super().sample(sample_shape=sample_shape)
+
     def rsample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
         """Sample multi-dimentional categorical value."""
         sample = super().rsample(sample_shape=sample_shape)
@@ -30,8 +38,8 @@ class MultiOneHot(td.OneHotCategoricalStraightThrough, Distribution):
 
     @property
     def parameters(self) -> dict[str, Tensor]:
-        """Set `probs`(not `logits`) as parameter."""
-        return {"probs": self.probs}
+        """Set `logits`(not `probs`) as parameter."""
+        return {"logits": self.logits}
 
 
 class OneHotCategorical(td.OneHotCategoricalStraightThrough, Distribution):
@@ -40,19 +48,35 @@ class OneHotCategorical(td.OneHotCategoricalStraightThrough, Distribution):
     This class is used to represent a 1D categorical distribution.
     """
 
+    def __init__(self, logits: Tensor) -> None:
+        """Initialize."""
+        super().__init__(logits=logits)
+
+    def sample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
+        """Sample categorical value."""
+        return super().sample(sample_shape=sample_shape)
+
+    def rsample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
+        """Sample categorical value."""
+        return super().rsample(sample_shape=sample_shape)
+
     @property
     def parameters(self) -> dict[str, Tensor]:
-        """Set `probs` (not `logits`) as parameter."""
-        return {"probs": self.probs}
+        """Set `logits` (not `probs`) as parameter."""
+        return {"logits": self.logits}
 
 
 class Categorical(td.Categorical, Distribution):
     """Extension of `torch.distributions.Categorical`."""
 
+    def __init__(self, logits: Tensor) -> None:
+        """Initialize."""
+        super().__init__(logits=logits)
+
     @property
     def parameters(self) -> dict[str, Tensor]:
-        """Set `probs` (not `logits`) as parameter."""
-        return {"probs": self.probs}
+        """Set `logits` (not `probs`) as parameter."""
+        return {"logits": self.logits}
 
     def rsample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
         """Sample categorical value."""

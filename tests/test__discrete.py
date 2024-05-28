@@ -34,7 +34,7 @@ class TestMultiOneHot:
     def test_parameters(self, init_tensor: Tensor) -> None:
         """Test `parameters`."""
         dist = MultiOneHot(init_tensor)
-        assert "probs" in dist.parameters
+        assert "logits" in dist.parameters
 
 
 class TestOneHotCategorical:
@@ -58,7 +58,7 @@ class TestOneHotCategorical:
     def test_parameters(self, init_tensor: Tensor) -> None:
         """Test `parameters`."""
         dist = OneHotCategorical(init_tensor)
-        assert "probs" in dist.parameters
+        assert "logits" in dist.parameters
 
 
 class TestCategorical:
@@ -76,12 +76,11 @@ class TestCategorical:
 
     def test_rsample(self, init_tensor: Tensor) -> None:
         """Test `rsample()`."""
-        dist = Categorical(probs=init_tensor)
+        dist = Categorical(logits=init_tensor)
         sample = dist.rsample()
         assert sample.shape == self.sample_shape
-        assert torch.equal(sample, torch.ones_like(sample) * 3)
 
     def test_parameters(self, init_tensor: Tensor) -> None:
         """Test `parameters`."""
         dist = Categorical(init_tensor)
-        assert "probs" in dist.parameters
+        assert "logits" in dist.parameters
