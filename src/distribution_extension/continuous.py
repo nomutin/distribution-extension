@@ -16,6 +16,14 @@ _zero_size = torch.Size([])
 class Normal(td.Normal, Distribution):
     """Extension of `torch.distributions.Normal` ."""
 
+    def sample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
+        """Sample from Normal distribution."""
+        return super().sample(sample_shape=sample_shape)
+
+    def rsample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
+        """Sample from Normal distribution."""
+        return super().rsample(sample_shape=sample_shape)
+
     def kl_divergence_starndard_normal(self) -> Tensor:
         """Calculate KL divergence between self and standard normal."""
         kld = 1 + self.variance.log() - self.mean.pow(2) - self.variance
@@ -78,13 +86,13 @@ class GMM(Distribution, td.Distribution):
             reinterpreted_batch_ndims=1,
         )
 
-    def sample(self, _: torch.Size = _zero_size) -> Tensor:
+    def sample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
         """Sample from GMM."""
-        return self.dist.sample()
+        return self.dist.sample(sample_shape=sample_shape)
 
-    def rsample(self, _: torch.Size = _zero_size) -> Tensor:
+    def rsample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
         """Sample from GMM."""
-        return self.dist.sample()
+        return self.dist.sample(sample_shape=sample_shape)
 
     def log_prob(self, value: Tensor) -> Tensor:
         """Calculate log-likelihood."""

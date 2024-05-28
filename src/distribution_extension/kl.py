@@ -54,6 +54,33 @@ def kl_balancing(
     return dyn + rep
 
 
+def mc_kl_divergence(
+    q: Distribution,
+    p: Distribution,
+    num_samples: int = 100,
+) -> Tensor:
+    """
+    Calculate KL divergence using Monte Carlo sampling.
+
+    Parameters
+    ----------
+    q : Independent
+        Poserior Distribution q.
+    p : Independent
+        Prior Distribution p.
+    num_samples : int, optional
+        Number of samples, by default 100.
+
+    Returns
+    -------
+    Tensor
+        KL divergence.
+
+    """
+    p_samples = p.rsample(torch.Size([num_samples]))
+    return q.log_prob(p_samples).mean() - p.log_prob(p_samples).mean()
+
+
 def gmm_loss(gmm: GMM, normal: Normal) -> Tensor:
     """Compute the gmm loss.
 
@@ -66,6 +93,10 @@ def gmm_loss(gmm: GMM, normal: Normal) -> Tensor:
     loss(batch) = - mean_{*batch} log(
     sum_{k=1..gs} pi[i1, i2, ..., k] * N(
     batch[i1, i2, ..., :] | mus[i1, i2, ..., k, :], sigmas[i1, i2, ..., k, :]))
+
+    Note
+    ----
+    This function is deprecated. Use `mc_kl_divergence` instead.
 
     References
     ----------
