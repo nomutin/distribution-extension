@@ -40,7 +40,7 @@ class TestMultiOneHot:
         dist = MultiOneHot(init_tensor)
         unsqueezed = dist.unsqueeze(1)
         sample = unsqueezed.rsample()
-        assert sample.shape == torch.Size([8, 1, 16, 4, 3])
+        assert sample.shape == torch.Size([8, 1, 16, 12])
 
     def test__detach(self, init_tensor: Tensor) -> None:
         """Test `detach()`."""

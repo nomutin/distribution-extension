@@ -24,9 +24,6 @@ dev-dependencies = [
 [tool.hatch.metadata]
 allow-direct-references = true
 
-[tool.black]
-line-length = 79
-
 [tool.pytest.ini_options]
 filterwarnings = [
     "ignore::UserWarning",
@@ -43,7 +40,7 @@ python_version = 3.8
 ignore_missing_imports = true
 
 [tool.ruff]
-line-length = 79
+line-length = 85
 target-version = "py38"
 
 [tool.ruff.lint]
