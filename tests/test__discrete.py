@@ -1,5 +1,4 @@
 """Tests for `distribution_extension/discrete.py`,."""
-
 import pytest
 import torch
 from distribution_extension.discrete import (
@@ -36,6 +35,20 @@ class TestMultiOneHot:
         dist = MultiOneHot(init_tensor)
         assert "logits" in dist.parameters
 
+    def test_unsqueeze(self, init_tensor: Tensor) -> None:
+        """Test `unsqueeze()`."""
+        dist = MultiOneHot(init_tensor)
+        unsqueezed = dist.unsqueeze(1)
+        sample = unsqueezed.rsample()
+        assert sample.shape == torch.Size([8, 1, 16, 4, 3])
+
+    def test__detach(self, init_tensor: Tensor) -> None:
+        """Test `detach()`."""
+        dist = MultiOneHot(init_tensor)
+        detached = dist.detach()
+        sample = detached.rsample()
+        assert sample.requires_grad is False
+
 
 class TestOneHotCategorical:
     """Tests for `OneHotCategorical`."""
@@ -59,6 +72,20 @@ class TestOneHotCategorical:
         """Test `parameters`."""
         dist = OneHotCategorical(init_tensor)
         assert "logits" in dist.parameters
+
+    def test_unsqueeze(self, init_tensor: Tensor) -> None:
+        """Test `unsqueeze()`."""
+        dist = OneHotCategorical(init_tensor)
+        unsqueezed = dist.unsqueeze(1)
+        sample = unsqueezed.rsample()
+        assert sample.shape == torch.Size([8, 1, 16, 4])
+
+    def test__detach(self, init_tensor: Tensor) -> None:
+        """Test `detach()`."""
+        dist = OneHotCategorical(init_tensor)
+        detached = dist.detach()
+        sample = detached.rsample()
+        assert sample.requires_grad is False
 
 
 class TestCategorical:
@@ -84,3 +111,17 @@ class TestCategorical:
         """Test `parameters`."""
         dist = Categorical(init_tensor)
         assert "logits" in dist.parameters
+
+    def test_unsqueeze(self, init_tensor: Tensor) -> None:
+        """Test `unsqueeze()`."""
+        dist = Categorical(init_tensor)
+        unsqueezed = dist.unsqueeze(1)
+        sample = unsqueezed.rsample()
+        assert sample.shape == torch.Size([8, 1, 16, 1])
+
+    def test_detach(self, init_tensor: Tensor) -> None:
+        """Test `detach()`."""
+        dist = Categorical(init_tensor)
+        detached = dist.detach()
+        sample = detached.rsample()
+        assert sample.requires_grad is False
