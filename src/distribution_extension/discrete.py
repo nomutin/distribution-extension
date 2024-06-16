@@ -21,9 +21,9 @@ class MultiOneHot(td.OneHotCategoricalStraightThrough, Distribution):
     A simpler usage is to use `.OneHotCategorical`.
     """
 
-    def __init__(self, logits: Tensor) -> None:
+    def __init__(self, logits: Tensor, validate_args: None | bool = None) -> None:
         """Initialize."""
-        super().__init__(logits=logits)
+        super().__init__(logits=logits, validate_args=validate_args)
 
     def sample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
         """Sample multi-dimentional categorical value."""
@@ -48,9 +48,9 @@ class OneHotCategorical(td.OneHotCategoricalStraightThrough, Distribution):
     This class is used to represent a 1D categorical distribution.
     """
 
-    def __init__(self, logits: Tensor) -> None:
+    def __init__(self, logits: Tensor, validate_args: None | bool = None) -> None:
         """Initialize."""
-        super().__init__(logits=logits)
+        super().__init__(logits=logits, validate_args=validate_args)
 
     def sample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
         """Sample categorical value."""
@@ -69,9 +69,9 @@ class OneHotCategorical(td.OneHotCategoricalStraightThrough, Distribution):
 class Categorical(td.Categorical, Distribution):
     """Extension of `torch.distributions.Categorical`."""
 
-    def __init__(self, logits: Tensor) -> None:
+    def __init__(self, logits: Tensor, validate_args: None | bool = None) -> None:
         """Initialize."""
-        super().__init__(logits=logits)
+        super().__init__(logits=logits, validate_args=validate_args)
 
     @property
     def parameters(self) -> dict[str, Tensor]:

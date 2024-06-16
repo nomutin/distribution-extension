@@ -1,6 +1,6 @@
 [project]
 name = "distribution-extension"
-version = "1.0.4"
+version = "1.0.5"
 description = "Add your description here"
 dependencies = [
     "einops>=0.7.0",
@@ -18,14 +18,11 @@ dev-dependencies = [
     "torch==2.0.1",
     "pytest-cov>=4.1.0",
     "mypy>=1.6.1",
-    "ruff>=0.4.2",
+    "ruff>=0.4.9",
 ]
 
 [tool.hatch.metadata]
 allow-direct-references = true
-
-[tool.black]
-line-length = 79
 
 [tool.pytest.ini_options]
 filterwarnings = [
@@ -43,7 +40,7 @@ python_version = 3.8
 ignore_missing_imports = true
 
 [tool.ruff]
-line-length = 79
+line-length = 85
 target-version = "py38"
 
 [tool.ruff.lint]
@@ -52,11 +49,9 @@ fixable = ["ALL"]
 unfixable = []
 select = ["ALL"]
 ignore = [
-    "S101",     # assert
-    "CPY001",   # missing-copyright-notice
-    "PLR6301",  # no-self-use
     "COM812",   # missing-trailing-comma
     "ISC001",   # single-line-implicit-string-concatenation
+    "CPY001",   # missing-copyright-notice
 ]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
@@ -68,6 +63,11 @@ convention = "numpy"
 
 [tool.ruff.lint.mccabe]
 max-complexity = 4
+
+[tool.ruff.lint.per-file-ignores]
+"src/distribution_extension/discrete.py" = ["FBT001"]
+"src/distribution_extension/factory.py" = ["PLR6301"]
+"tests/test_**.py" = ["S101", "PLR6301"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["distribution_extention"]

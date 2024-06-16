@@ -31,6 +31,31 @@ class TestNormal:
         assert "loc" in dist.parameters
         assert "scale" in dist.parameters
 
+    def test_rsample(self, init_tensor: Tensor) -> None:
+        """Test `rsample()`."""
+        loc, scale = torch.chunk(init_tensor, 2, dim=-1)
+        dist = Normal(loc, scale)
+        sample = dist.rsample()
+        expected_shape = torch.Size([self.batch_size, self.seq_len, self.dim])
+        assert sample.shape == expected_shape
+
+    def test_unsqueeze(self, init_tensor: Tensor) -> None:
+        """Test `unsqueeze()`."""
+        loc, scale = torch.chunk(init_tensor, 2, dim=-1)
+        dist = Normal(loc, scale)
+        unsqueezed = dist.unsqueeze(1)
+        sample = unsqueezed.rsample()
+        expected_shape = torch.Size([8, 1, 16, 4])
+        assert sample.shape == expected_shape
+
+    def test_detach(self, init_tensor: Tensor) -> None:
+        """Test `detach()`."""
+        loc, scale = torch.chunk(init_tensor, 2, dim=-1)
+        dist = Normal(loc, scale)
+        detached = dist.detach()
+        sample = detached.rsample()
+        assert sample.requires_grad is False
+
 
 class TestGMM:
     """Tests for `GMM`."""
