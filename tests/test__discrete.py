@@ -1,4 +1,5 @@
 """Tests for `distribution_extension/discrete.py`,."""
+
 import pytest
 import torch
 from distribution_extension.discrete import (
