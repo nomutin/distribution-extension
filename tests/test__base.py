@@ -20,7 +20,7 @@ class TestDistribution:
 class TestIndependent:
     """Tests for `Independent`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_dist(self) -> Normal:
         """Initialize distribution."""
         self.batch = 1

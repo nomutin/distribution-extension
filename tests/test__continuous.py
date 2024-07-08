@@ -9,7 +9,7 @@ from torch import Tensor
 class TestNormal:
     """Tests for `Normal`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         self.batch_size = 8
@@ -60,7 +60,7 @@ class TestNormal:
 class TestGMM:
     """Tests for `GMM`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         batch_size = 8

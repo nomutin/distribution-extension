@@ -17,7 +17,7 @@ from torch import Tensor
 class TestGMMFactory:
     """Tests for `GMMFactory`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         batch_size = 8
@@ -37,7 +37,7 @@ class TestGMMFactory:
 class TestNormalFactory:
     """Tests for `NormalFactory`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         batch_size = 8
@@ -56,7 +56,7 @@ class TestNormalFactory:
 class TestMultiOneHotFactory:
     """Tests for `MultiOneHotFactory`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         batch_size = 8
@@ -80,7 +80,7 @@ class TestMultiOneHotFactory:
 class TestOneHotCategoricalFactory:
     """Tests for `OneHotCategoricalFactory`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         batch_size = 8
@@ -99,7 +99,7 @@ class TestOneHotCategoricalFactory:
 class TestCategoricalFactory:
     """Tests for `CategoricalFactory`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         batch_size = 8
@@ -121,7 +121,7 @@ class TestCategoricalFactory:
 class TestIndependentFactory:
     """Tests for `IndependentFactory`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         self.batch_size = 8

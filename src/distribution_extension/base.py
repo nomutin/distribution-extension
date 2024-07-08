@@ -52,6 +52,11 @@ class Distribution(td.Distribution):
         params = {k: v.detach() for k, v in self.parameters.items()}
         return type(self)(**params, validate_args=self._validate_args)
 
+    def clone(self) -> Distribution:
+        """Clone distribution."""
+        params = {k: v.clone() for k, v in self.parameters.items()}
+        return type(self)(**params, validate_args=self._validate_args)
+
 
 class Independent(td.Independent, Distribution):
     """Extension of `torch.distributions.Independent`.

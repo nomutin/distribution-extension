@@ -13,7 +13,7 @@ from torch import Tensor
 class TestMultiOneHot:
     """Tests for `MultiOneHot`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         batch_size = 8
@@ -54,7 +54,7 @@ class TestMultiOneHot:
 class TestOneHotCategorical:
     """Tests for `OneHotCategorical`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         batch_size = 8
@@ -92,7 +92,7 @@ class TestOneHotCategorical:
 class TestCategorical:
     """Tests for `Categorical`."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def init_tensor(self) -> Tensor:
         """Initialize tensor."""
         batch_size = 8
