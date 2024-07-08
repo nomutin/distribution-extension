@@ -56,6 +56,19 @@ class TestNormal:
         sample = detached.rsample()
         assert sample.requires_grad is False
 
+    def test_clone(self, init_tensor: Tensor) -> None:
+        """Test `clone()`."""
+        loc, scale = torch.chunk(init_tensor, 2, dim=-1)
+        dist = Normal(loc, scale)
+        cloned = dist.clone()
+        # 1. Parameter
+        assert torch.equal(dist.mean, cloned.mean)
+        # 2. Memory Independency
+        assert dist.mean.data_ptr() != cloned.mean.data_ptr()
+        # 3. Parameter Independency
+        cloned.mean[0, 0, 0] = 100
+        assert not torch.equal(dist.mean, cloned.mean)
+
 
 class TestGMM:
     """Tests for `GMM`."""
