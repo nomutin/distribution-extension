@@ -1,6 +1,6 @@
 [project]
 name = "distribution-extension"
-version = "1.0.6"
+version = "1.0.7"
 description = "Add your description here"
 dependencies = [
     "einops>=0.7.0",
@@ -51,11 +51,7 @@ preview = true
 fixable = ["ALL"]
 unfixable = []
 select = ["ALL"]
-ignore = [
-    "COM812",   # missing-trailing-comma
-    "ISC001",   # single-line-implicit-string-concatenation
-    "CPY001",   # missing-copyright-notice
-]
+ignore = ["CPY001"]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.format]

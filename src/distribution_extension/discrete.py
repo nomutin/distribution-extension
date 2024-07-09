@@ -89,3 +89,21 @@ class Categorical(td.Categorical, Distribution):
     def log_prob(self, value: Tensor) -> Tensor:
         """Calculate log probability of categorical value."""
         return super().log_prob(value.squeeze(-1))
+
+
+class BernoulliStraightThrough(td.Bernoulli, Distribution):
+    """Extension of `torch.distributions.Bernoulli`."""
+
+    def __init__(self, logits: Tensor, validate_args: None | bool = None) -> None:
+        """Initialize."""
+        super().__init__(logits=logits, validate_args=validate_args)
+
+    @property
+    def parameters(self) -> dict[str, Tensor]:
+        """Set `logits` (not `probs`) as parameter."""
+        return {"logits": self.logits}
+
+    def rsample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
+        """Sample using straight-through estimator."""
+        sample = self.sample(sample_shape=sample_shape)
+        return self.logits - self.logits.detach() + sample

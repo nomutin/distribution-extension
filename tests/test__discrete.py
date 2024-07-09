@@ -6,6 +6,7 @@ from distribution_extension.discrete import (
     Categorical,
     MultiOneHot,
     OneHotCategorical,
+    BernoulliStraightThrough,
 )
 from torch import Tensor
 
@@ -123,6 +124,49 @@ class TestCategorical:
     def test_detach(self, init_tensor: Tensor) -> None:
         """Test `detach()`."""
         dist = Categorical(init_tensor)
+        detached = dist.detach()
+        sample = detached.rsample()
+        assert sample.requires_grad is False
+
+
+class TestBernoulliStraightThrough:
+    """Tests for `BernoulliStraightThrough`."""
+
+    @pytest.fixture
+    def init_tensor(self) -> Tensor:
+        """Initialize tensor."""
+        batch_size = 8
+        seq_len = 16
+        class_size = 4
+        self.sample_shape = torch.Size([batch_size, seq_len, class_size])
+        return torch.rand([batch_size, seq_len, class_size], requires_grad=True)
+
+    def test_rsample(self, init_tensor: Tensor) -> None:
+        """Test `rsample()`."""
+        dist = BernoulliStraightThrough(logits=init_tensor)
+        sample = dist.sample()
+        assert sample.shape == self.sample_shape
+        assert sample.requires_grad is False
+
+        rsample = dist.rsample()
+        assert rsample.shape == self.sample_shape
+        assert rsample.requires_grad is True
+
+    def test_parameters(self, init_tensor: Tensor) -> None:
+        """Test `parameters`."""
+        dist = BernoulliStraightThrough(logits=init_tensor)
+        assert "logits" in dist.parameters
+
+    def test_unsqueeze(self, init_tensor: Tensor) -> None:
+        """Test `unsqueeze()`."""
+        dist = BernoulliStraightThrough(logits=init_tensor)
+        unsqueezed = dist.unsqueeze(dim=1)
+        sample = unsqueezed.rsample()
+        assert sample.shape == torch.Size([8, 1, 16, 4])
+
+    def test_detach(self, init_tensor: Tensor) -> None:
+        """Test `detach()`."""
+        dist = BernoulliStraightThrough(logits=init_tensor)
         detached = dist.detach()
         sample = detached.rsample()
         assert sample.requires_grad is False
