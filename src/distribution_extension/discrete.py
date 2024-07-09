@@ -94,16 +94,16 @@ class Categorical(td.Categorical, Distribution):
 class BernoulliStraightThrough(td.Bernoulli, Distribution):
     """Extension of `torch.distributions.Bernoulli`."""
 
-    def __init__(self, logits: Tensor, validate_args: None | bool = None) -> None:
+    def __init__(self, probs: Tensor, validate_args: None | bool = None) -> None:
         """Initialize."""
-        super().__init__(logits=logits, validate_args=validate_args)
+        super().__init__(probs=probs, validate_args=validate_args)
 
     @property
     def parameters(self) -> dict[str, Tensor]:
         """Set `logits` (not `probs`) as parameter."""
-        return {"logits": self.logits}
+        return {"probs": self.probs}
 
     def rsample(self, sample_shape: torch.Size = _zero_size) -> Tensor:
         """Sample using straight-through estimator."""
         sample = self.sample(sample_shape=sample_shape)
-        return self.logits - self.logits.detach() + sample
+        return self.probs - self.probs.detach() + sample

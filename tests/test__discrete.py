@@ -3,10 +3,10 @@
 import pytest
 import torch
 from distribution_extension.discrete import (
+    BernoulliStraightThrough,
     Categorical,
     MultiOneHot,
     OneHotCategorical,
-    BernoulliStraightThrough,
 )
 from torch import Tensor
 
@@ -143,7 +143,7 @@ class TestBernoulliStraightThrough:
 
     def test_rsample(self, init_tensor: Tensor) -> None:
         """Test `rsample()`."""
-        dist = BernoulliStraightThrough(logits=init_tensor)
+        dist = BernoulliStraightThrough(probs=init_tensor)
         sample = dist.sample()
         assert sample.shape == self.sample_shape
         assert sample.requires_grad is False
@@ -154,19 +154,19 @@ class TestBernoulliStraightThrough:
 
     def test_parameters(self, init_tensor: Tensor) -> None:
         """Test `parameters`."""
-        dist = BernoulliStraightThrough(logits=init_tensor)
-        assert "logits" in dist.parameters
+        dist = BernoulliStraightThrough(probs=init_tensor)
+        assert "probs" in dist.parameters
 
     def test_unsqueeze(self, init_tensor: Tensor) -> None:
         """Test `unsqueeze()`."""
-        dist = BernoulliStraightThrough(logits=init_tensor)
+        dist = BernoulliStraightThrough(probs=init_tensor)
         unsqueezed = dist.unsqueeze(dim=1)
         sample = unsqueezed.rsample()
         assert sample.shape == torch.Size([8, 1, 16, 4])
 
     def test_detach(self, init_tensor: Tensor) -> None:
         """Test `detach()`."""
-        dist = BernoulliStraightThrough(logits=init_tensor)
+        dist = BernoulliStraightThrough(probs=init_tensor)
         detached = dist.detach()
         sample = detached.rsample()
         assert sample.requires_grad is False

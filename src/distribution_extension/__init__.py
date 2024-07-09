@@ -3,6 +3,7 @@
 from .base import Distribution, Independent
 from .continuous import GMM, Normal
 from .discrete import (
+    BernoulliStraightThrough,
     Categorical,
     MultiOneHot,
     OneHotCategorical,
@@ -19,6 +20,7 @@ from .kl import kl_divergence
 
 __all__ = [
     "GMM",
+    "BernoulliStraightThrough",
     "Categorical",
     "CategoricalFactory",
     "Distribution",
