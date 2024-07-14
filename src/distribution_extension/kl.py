@@ -77,8 +77,8 @@ def mc_kl_divergence(
         KL divergence.
 
     """
-    p_samples = p.rsample(torch.Size([num_samples]))
-    return q.log_prob(p_samples).mean() - p.log_prob(p_samples).mean()
+    q_samples = q.rsample(torch.Size([num_samples]))
+    return q.log_prob(q_samples).mean() - p.log_prob(q_samples).mean()
 
 
 def gmm_loss(gmm: GMM, normal: Normal) -> Tensor:
